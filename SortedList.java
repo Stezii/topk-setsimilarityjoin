@@ -1,5 +1,3 @@
-package similarity_computing.set_similarity_join;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

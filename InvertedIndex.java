@@ -1,5 +1,3 @@
-package similarity_computing.set_similarity_join;
-
 import java.util.HashMap;
 
 public class InvertedIndex {

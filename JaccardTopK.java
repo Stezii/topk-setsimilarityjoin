@@ -1,5 +1,3 @@
-package similarity_computing.set_similarity_join;
-
 public class JaccardTopK {
 
     public int k;

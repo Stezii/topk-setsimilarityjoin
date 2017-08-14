@@ -1,7 +1,3 @@
-package similarity_computing.set_similarity_join;
-
-import data_handling.Utils;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -58,7 +54,7 @@ public class SetSimJoin {
                 records.put(ln[0], list);
             });
         } catch (IOException e) {
-            Utils.consoleLog("Could not read from " + filePath);
+            System.out.println("Could not read from " + filePath);
             e.printStackTrace();
         }
     }
@@ -68,7 +64,7 @@ public class SetSimJoin {
             Files.write(Paths.get(filePath), () -> results.stream().sequential().<CharSequence>map(e ->
                     e[0] +"\t"+e[1] +"\t"+e[2]).iterator());
         } catch (IOException e) {
-            Utils.consoleLog("Could not write to " + filePath);
+            System.out.println("Could not write to " + filePath);
             e.printStackTrace();
         }
     }
