@@ -20,9 +20,9 @@ public class Topk {
         PriorityQueue<Object[]> events = new PriorityQueue<>((o1, o2) -> {
             if ((Double)o1[2] > (Double)o2[2])
                 return -1;
-            else if ((Double)o1[2] == (Double)o2[2] && (Double)o1[0] > (Double)o2[0])
+            else if (Math.abs((Double) o1[2]-(Double) o2[2])<1E-13 && (int)o1[0] > (int)o2[0])
                 return -1;
-            else if ((Double)o1[2] == (Double)o2[2] && (Double)o1[0] == (Double)o2[0])
+            else if (Math.abs((Double) o1[2]-(Double) o2[2])<1E-13 && (int)o1[0] == (int)o2[0])
                 return 0;
             else
                 return 1;
@@ -33,13 +33,14 @@ public class Topk {
         SortedList<Object[]> tmpresults = new SortedList<>((o1, o2) -> {
             if ((Double)o1[0] > (Double)o2[0])
                 return -1;
-            else if ((Double)o1[0] == (Double)o2[0])
+            else if (Math.abs((Double) o1[0]-(Double) o2[0])<1E-13)
                 return 0;
             else
                 return 1;
         });
+
         // <recordid1, recordid2>
-        Set<int[]> testonce = new HashSet<>();
+        Set<ArrayList<Integer>> testonce = new HashSet<>();
 
         boolean do_index_insertion = true;
 
@@ -74,7 +75,7 @@ public class Topk {
 
                 // length filter
                 if (indreclen >= similarity.minsize_orig(indreclen, thres) && indreclen <= similarity.maxsize_orig(indreclen, thres)) {
-                    int[] testpair = new int[]{Math.min(recordid, indrecid), Math.max(recordid, indrecid)};
+                    ArrayList<Integer> testpair = new ArrayList<>(Arrays.asList(Math.min(recordid, indrecid), Math.max(recordid, indrecid)));
                     if (!testonce.contains(testpair)) {
                         candcount++;
                         double maxrecprobepos = similarity.maxprefix(reclen, thres);
@@ -111,7 +112,7 @@ public class Topk {
                 if (sim_upperbound_index > thres)
                     ind.add(token, new int[] {recordid, (int)curevent[1]});
                 else
-                do_index_insertion = false;
+                    do_index_insertion = false;
             }
         }
 
