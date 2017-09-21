@@ -1,3 +1,5 @@
+import data_handling.Utils;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,14 +26,26 @@ public class SetSimJoin {
         setRecords(records);
     }
 
-    public void topk(Integer k) {
+    public void topkGlobal(Integer k) {
         if (records == null)
             throw new IllegalArgumentException("Records missing");
         if (k == null)
             throw new IllegalArgumentException("k missing");
 
         mapRecords();
-        Topk topk = new Topk(records_internal, new JaccardTopK(k), results_internal);
+        TopkGlobal topk = new TopkGlobal(records_internal, new JaccardTopK(k), results_internal);
+        topk.run();
+        mapResults();
+    }
+
+    public void topkLocal(Integer k) {
+        if (records == null)
+            throw new IllegalArgumentException("Records missing");
+        if (k == null)
+            throw new IllegalArgumentException("k missing");
+
+        mapRecords();
+        TopkLocal topk = new TopkLocal(records_internal, new JaccardTopK(k), results_internal);
         topk.run();
         mapResults();
     }
@@ -54,7 +68,7 @@ public class SetSimJoin {
                 records.put(ln[0], list);
             });
         } catch (IOException e) {
-            System.out.println("Could not read from " + filePath);
+            Utils.consoleLog("Could not read from " + filePath);
             e.printStackTrace();
         }
     }
@@ -64,7 +78,7 @@ public class SetSimJoin {
             Files.write(Paths.get(filePath), () -> results.stream().sequential().<CharSequence>map(e ->
                     e[0] +"\t"+e[1] +"\t"+e[2]).iterator());
         } catch (IOException e) {
-            System.out.println("Could not write to " + filePath);
+            Utils.consoleLog("Could not write to " + filePath);
             e.printStackTrace();
         }
     }

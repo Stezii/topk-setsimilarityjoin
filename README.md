@@ -15,7 +15,7 @@ SetSimJoin ssj = new SetSimJoin();
 ssj.readFromFile("ssj_set.txt");
 ~~~
 
-## Load from LinkedHashMap<String, ArrayList<Integer>>
+## Load from LinkedHashMap`<String, ArrayList<Integer>>`
 ~~~java
 SetSimJoin ssj = new SetSimJoin();
 ssj.setRecords(records);
@@ -26,10 +26,14 @@ SetSimJoin ssj = new SetSimJoin(records);
 ~~~
 
 ## Perform Top-k Set Similarity Join
+Calculate either the k most similar record pairs in the whole dataset:
 ~~~java
-ssj.topk(1000);
+ssj.topkGlobal(1000);
 ~~~
-
+or the k most similar partners for each record:
+~~~java
+ssj.topkLocal(10);
+~~~
 ## Output results
 ~~~java
 ssj.saveToFile("ssj_graph.txt");

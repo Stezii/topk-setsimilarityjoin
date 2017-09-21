@@ -43,7 +43,7 @@ public class JaccardTopK {
     }
 
     public double computesim(int len1, int len2, int overlap) {
-        return overlap / ( 0.0 + len1 + len2 - overlap );
+        return overlap / (0.0 + len1 + len2 - overlap);
     }
 
     public double upperbound_access(int len1, int len2, int pos1, int pos2) {
