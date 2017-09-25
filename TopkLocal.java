@@ -29,16 +29,14 @@ public class TopkLocal {
             ind.add(token, new int[] {recordid});
         }));
 
-        records.entrySet().forEach(el ->  {
-            Integer recordid = el.getKey();
-            ArrayList<Integer> tokens = el.getValue();
+        records.forEach((recordid, tokens) -> {
             int reclen = tokens.size();
 
             // <simval, recordid1, recordid2>
             SortedList<Object[]> tmpresults = new SortedList<>((o1, o2) -> {
-                if ((Double)o1[0] > (Double)o2[0])
+                if ((Double) o1[0] > (Double) o2[0])
                     return -1;
-                else if (Math.abs((Double) o1[0]-(Double) o2[0])<1E-13)
+                else if (Math.abs((Double) o1[0] - (Double) o2[0]) < 1E-13)
                     return 0;
                 else
                     return 1;
@@ -75,13 +73,8 @@ public class TopkLocal {
 
                         if (verified[0] > 0) {
                             double sim_val = similarity.computesim(reclen, indreclen, verified[0]);
-
                             tmpresults.add(new Object[]{sim_val, recordid, indrecid});
                             testonce.add(testpair);
-
-   //                         if (recordid >= 2712) {
-      //                          System.out.println(sim_val);
-        //                    }
 
                             // SimilarityUpperBound-Probe
                             thres = getThres(tmpresults, similarity.k);
