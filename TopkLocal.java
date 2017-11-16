@@ -2,8 +2,6 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static similarity_computing.set_similarity_join.Verify.verifiy_sim;
-
 public class TopkLocal {
 
     private final ArrayList<Object[]> results;
@@ -69,7 +67,7 @@ public class TopkLocal {
                         int minoverlap = similarity.minoverlap(reclen, indreclen, thres);
 
                         // <sim_overlap, nextposrec, nextposindrec>
-                        int[] verified = verifiy_sim(tokens, indexedrecord, minoverlap, 0, 0, 0);
+                        int[] verified = Verify.verifiy_sim(tokens, indexedrecord, minoverlap, 0, 0, 0);
 
                         if (verified[0] > 0) {
                             double sim_val = similarity.computesim(reclen, indreclen, verified[0]);

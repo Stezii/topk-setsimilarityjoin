@@ -1,7 +1,5 @@
 import java.util.*;
 
-import static similarity_computing.set_similarity_join.Verify.verifiy_sim;
-
 public class TopkGlobal {
 
     private final ArrayList<Object[]> results;
@@ -86,7 +84,7 @@ public class TopkGlobal {
                         int minoverlap = similarity.minoverlap(reclen, indreclen, thres);
 
                         // <sim_overlap, nextposrec, nextposindrec>
-                        int[] verified = verifiy_sim(record, indexedrecord, minoverlap, 1,
+                        int[] verified = Verify.verifiy_sim(record, indexedrecord, minoverlap, 1,
                                 (int)curevent[1] + 1, indrecordpair[1] + 1);
 
                         double sim_val = similarity.computesim(reclen, indreclen, verified[0]);
